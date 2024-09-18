@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "app.rive.rive-unity": "file:C:/Users/proje/Downloads/rive-unity-main/rive-unity-main/package",
     "com.unity.collab-proxy": "2.5.1",
     "com.unity.ide.rider": "3.0.27",
     "com.unity.ide.visualstudio": "2.0.22",

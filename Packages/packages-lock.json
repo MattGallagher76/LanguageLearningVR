@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "app.rive.rive-unity": {
+      "version": "file:C:/Users/proje/Downloads/rive-unity-main/rive-unity-main/package",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.12",
       "depth": 1,
