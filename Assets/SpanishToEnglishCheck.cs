@@ -22,6 +22,8 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
     private int promptIndex;
 
+    public bool debugMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,20 +37,23 @@ public class SpanishToEnglishCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !hasBeenDone)
+        if (debugMode)
         {
-            hasBeenDone = true;
-            StartRecording();
-        }
-        if (isRecording)
-        {
-            time += Time.deltaTime;
-            
-            if (time >= duration)
+            if (Input.GetKeyDown(KeyCode.Space) && !hasBeenDone)
             {
-                time = 0;
-                isRecording = false;
-                EndRecording();
+                hasBeenDone = true;
+                StartRecording(0);
+            }
+            if (isRecording)
+            {
+                time += Time.deltaTime;
+
+                if (time >= duration)
+                {
+                    time = 0;
+                    isRecording = false;
+                    EndRecording();
+                }
             }
         }
     }
@@ -97,7 +102,7 @@ public class SpanishToEnglishCheck : MonoBehaviour
         }
     }
 
-    private void StartRecording()
+    public void StartRecording(int actionID)
     {
         Debug.Log("started recording");
         isRecording = true;
@@ -107,5 +112,11 @@ public class SpanishToEnglishCheck : MonoBehaviour
         #if !UNITY_WEBGL
         clip = Microphone.Start(Microphone.devices[0], false, duration, 44100);
         #endif
+    }
+
+    public int sceneManagerCheck()
+    {
+
+        return 0;
     }
 }
