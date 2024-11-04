@@ -24,10 +24,15 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
     public bool debugMode = false;
 
+    int currentActionID = -1;
+
+    TotalSceneManager tsm;
+
     // Start is called before the first frame update
     void Start()
     {
-        promptList.Add("Does this text contain a typical greeting in spanish or in english. Repond with only yes or no.");
+        tsm = FindAnyObjectByType<TotalSceneManager>();
+        promptList.Add("Respond with only a number as described here: 1 - If the provided text is an appropriate response to \"Hello how are you?\" but does not contain a question how are you doing? 2 - If the provided text is an appropriate response to \"Hello how are you?\" and contains a question or reference to a question of how are you? 3 - If the provided text is not an appropriate reponse to \"Hello how are you?\" Provided text: ");
         promptList.Add("TODO1");
         promptList.Add("TODO2");
         promptList.Add("TODO3");
@@ -61,6 +66,7 @@ public class SpanishToEnglishCheck : MonoBehaviour
     private async void EndRecording()
     {
         Debug.Log("ended recording");
+        tsm.addText("ended recording");
         #if !UNITY_WEBGL
         Microphone.End(null);
         #endif
@@ -76,34 +82,57 @@ public class SpanishToEnglishCheck : MonoBehaviour
         var res = await openai.CreateAudioTranslation(req);
 
         Debug.Log("res: " + res.Text);
+        tsm.addText("res: " + res.Text);
 
-        var newMessage = new ChatMessage()
+        if (currentActionID == 0)
         {
-            Role = "user",
-            Content = promptList[promptIndex] + "\n" + res.Text
-        };
+            var newMessage = new ChatMessage()
+            {
+                Role = "user",
+                Content = promptList[0] + "\n" + res.Text
+            };
 
-        List<ChatMessage> messages = new List<ChatMessage>();
-        messages.Add(newMessage);
+            List<ChatMessage> messages = new List<ChatMessage>();
+            messages.Add(newMessage);
 
-        var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
-        {
-            Model = "gpt-4o-mini",
-            Messages = messages
-        });
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-4o-mini",
+                Messages = messages
+            });
 
-        if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
-        {   
-            var message = completionResponse.Choices[0].Message;
-            message.Content = message.Content.Trim();
+            if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+            {
+                var message = completionResponse.Choices[0].Message;
+                message.Content = message.Content.Trim();
 
-            Debug.Log("Message: " + message.Content);
-            Debug.Log("Done");
+                Debug.Log("Message: " + message.Content);
+                Debug.Log("Done");
+                tsm.addText("Message: " + message.Content);
+
+                if (message.Content.Contains("1"))
+                {
+                    tsm.response(1);
+                }
+                if (message.Content.Contains("2"))
+                {
+                    tsm.response(2);
+                }
+                if (message.Content.Contains("3"))
+                {
+                    tsm.response(3);
+                }
+            }
+            else
+            {
+                Debug.Log("error");
+            }
         }
     }
 
     public void StartRecording(int actionID)
     {
+        currentActionID = actionID;
         Debug.Log("started recording");
         isRecording = true;
         
