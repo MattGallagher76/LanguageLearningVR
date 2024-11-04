@@ -97,6 +97,8 @@ public class TotalSceneManager : MonoBehaviour
             else if (actionID == 3)
             {
                 waiterAudioController.PlayOneShot(audioLines[3]);
+                hasStarted = false;
+                timer = waitForStartTimer;
             }
             else
             {
