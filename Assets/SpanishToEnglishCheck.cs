@@ -145,7 +145,6 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
     public int sceneManagerCheck()
     {
-
         return 0;
     }
 }

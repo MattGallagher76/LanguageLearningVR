@@ -40,6 +40,16 @@ public class TotalSceneManager : MonoBehaviour
 
     //3 - "I'm sorry, I don't know what you mean?"
 
+
+    public List<List<string>> hintTexts;
+
+    public List<TMPro.TextMeshProUGUI> hintTextObjects;
+
+    int currentHintCount = 0;
+    int eventNumber = 0;
+
+    int currentActionID;
+
     void Start()
     {
         timer = waitForStartTimer;
@@ -64,7 +74,7 @@ public class TotalSceneManager : MonoBehaviour
             {
                 hasStarted = true;
                 Debug.Log("Starting co");
-                tmpDebug.text += "Starting co\n";
+                //tmpDebug.text += "Starting co\n";
                 StartCoroutine(playAndwaitToStartRecording(audioLines[0], 0));
             }
         }
@@ -77,9 +87,15 @@ public class TotalSceneManager : MonoBehaviour
         if(actionID == 0)
         {
             Debug.Log("Started recording");
-            tmpDebug.text += "Started recording\n";
-            openAIStuff.StartRecording(actionID);
+            //tmpDebug.text += "Started recording\n";
+            //openAIStuff.StartRecording(actionID);
+            currentActionID = actionID;
         }
+    }
+
+    public void startRecording()
+    {
+        openAIStuff.StartRecording(currentActionID);
     }
 
     public void response(int actionID)
@@ -103,13 +119,23 @@ public class TotalSceneManager : MonoBehaviour
             else
             {
                 Debug.Log("Did not get 1, 2, or 3: " + actionID);
-                tmpDebug.text += "Did not get 1, 2, or 3: " + actionID + "\n";
+                //tmpDebug.text += "Did not get 1, 2, or 3: " + actionID + "\n";
             }
         }
     }
 
     public void addText(string str)
     {
-        tmpDebug.text += str + "\n";
+        //tmpDebug.text += str + "\n";
     }
+
+    public void showHint()
+    {
+        if (currentHintCount < 3)
+        {
+            currentHintCount++;
+            hintTextObjects[currentHintCount].text = hintTexts[eventNumber][currentHintCount];
+        }
+    }
+
 }
