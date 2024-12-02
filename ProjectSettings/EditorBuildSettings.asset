@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Samples/XR Interaction Toolkit/2.5.4/Starter Assets/DemoScene.unity
     guid: 319dafa5c80f29f428dc1e0d03f04177
   - enabled: 1
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 43d7de29c0e8ac445ad1cb90516eb6b4
+  - enabled: 1
     path: Assets/temp.unity
     guid: 7d82b89757dc72748b8b469203732643
   m_configObjects:
