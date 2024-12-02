@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f6dd77806183147b71c465c211d698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 0}
 --- !u!114 &21996813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +644,7 @@ MonoBehaviour:
   acController: {fileID: 202051646}
   animationTriggers: []
   waitForStartTimer: 5
-  timer: 5
+  timer: -1.98
   waiterAnimationController: {fileID: 0}
   waiterAudioController: {fileID: 202051647}
   audioLines:
@@ -652,6 +653,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d4809fdd5eb04e54c9ebc687ec691a27, type: 3}
   - {fileID: 8300000, guid: 3e89a0f4ad24eb04785122d00c9f6ddb, type: 3}
   openAIStuff: {fileID: 203496646}
+  hintTextsOne: []
+  hintTextsTwo: []
+  hintTextsThree: []
+  hintTextsFour: []
+  hintTextsFive: []
   hintTextObjects:
   - {fileID: 1721392542}
   - {fileID: 679744544}
@@ -2411,6 +2417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9caac394a54d554799553f8cb94ce2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelRectTransform: {fileID: 0}
+  tmpText: {fileID: 0}
 --- !u!114 &1177073262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3412,7 +3420,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802288660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.53}
+  m_LocalPosition: {x: 0, y: 0, z: 0.791}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
