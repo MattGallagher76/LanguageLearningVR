@@ -56,15 +56,23 @@ public class TotalSceneManager : MonoBehaviour
     public List<string> hintTextsFour;
     public List<string> hintTextsFive;
 
-    public List<List<string>> hintTexts;
+    public List<List<string>> hintTexts = new List<List<string>>();
 
     public List<TMPro.TextMeshProUGUI> hintTextObjects;
 
     int currentHintCount = 0;
-    int eventNumber = 0; //What hintList to use
+    int eventNumber = 0;
+
+    public List<GameObject> drinks;
+    public List<GameObject> food;
+
+    public Vector3 drinkPosition;
+    public Vector3 foodPosition;
 
     void Start()
     {
+        hideAllHints();
+        eventNumber = 0;
         hintTexts.Add(hintTextsOne);
         hintTexts.Add(hintTextsTwo);
         hintTexts.Add(hintTextsThree);
@@ -75,11 +83,12 @@ public class TotalSceneManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(timer >= 0)
+        if (timer >= 0)
         {
+            //Debug.Log(timer);
             timer -= Time.deltaTime;
         }
-        if(timer <= 0 && currentState == 0)
+        if (timer <= 0 && currentState == 0)
         {
             currentState = 1;
         }
@@ -94,12 +103,12 @@ public class TotalSceneManager : MonoBehaviour
             currentState = 4;
             StartCoroutine(playAndwaitToStartRecording(audioLines[4], 0));
         }
-        if(currentState == 5)
+        if (currentState == 5)
         {
             currentState = 6;
             StartCoroutine(playAndwaitToStartRecording(audioLines[6], 0));
         }
-        if(currentState == 7)
+        if (currentState == 7)
         {
             currentState = 8;
             StartCoroutine(playAndwaitToStartRecording(audioLines[8], 0));
@@ -122,36 +131,42 @@ public class TotalSceneManager : MonoBehaviour
             hideAllHints();
         }
         yield return new WaitForSeconds(ac.length);
-        if(actionID == 3)
+        if (actionID == 3)
         {
-            //Coke
+            GameObject gb = Instantiate(drinks[0]);
+            gb.transform.position = drinkPosition;
         }
-        if(actionID == 4)
+        if (actionID == 4)
         {
-            //Water
+            GameObject gb = Instantiate(drinks[1]);
+            gb.transform.position = drinkPosition;
         }
-        if(actionID == 5)
+        if (actionID == 5)
         {
-            //Juice
+            GameObject gb = Instantiate(drinks[2]);
+            gb.transform.position = drinkPosition;
         }
         if (actionID == 7)
         {
-            //Enchilada
+            GameObject gb = Instantiate(food[0]);
+            gb.transform.position = foodPosition;
         }
         if (actionID == 8)
         {
-            //Taco
+            GameObject gb = Instantiate(food[1]);
+            gb.transform.position = foodPosition;
         }
         if (actionID == 9)
         {
-            //Burrito
+            GameObject gb = Instantiate(food[2]);
+            gb.transform.position = foodPosition;
         }
         yield return new WaitForSeconds(2.5f);
-        if(actionID == 1)
+        if (actionID == 1)
         {
             currentState = 3;
         }
-        if(actionID == 2)
+        if (actionID == 2)
         {
             currentState = 1;
         }
@@ -167,11 +182,11 @@ public class TotalSceneManager : MonoBehaviour
         {
             currentState = 3;
         }
-        if(actionID == 10)
+        if (actionID == 10)
         {
             currentState = 5;
         }
-        if(actionID == 11)
+        if (actionID == 11)
         {
             currentState = 7;
         }
@@ -179,15 +194,15 @@ public class TotalSceneManager : MonoBehaviour
 
     public void startRecording()
     {
-        if(currentState == 2 || currentState == 4 || currentState == 6 || currentState == 8)
+        if (currentState == 2 || currentState == 4 || currentState == 6 || currentState == 8)
             openAIStuff.StartRecording(currentState);
     }
 
     public void response(int actionID)
     {
-        if(currentState == 2)
+        if (currentState == 2)
         {
-            if(actionID == 1)
+            if (actionID == 1)
             {
                 StartCoroutine(playAndwaitToStartRecording(audioLines[1], 1));
             }
@@ -279,10 +294,20 @@ public class TotalSceneManager : MonoBehaviour
 
     public void showHint()
     {
-        if (currentHintCount < 3)
+        if (currentHintCount == 0)
         {
+            hintTextObjects[currentHintCount].text = "The waiter said: " + hintTexts[eventNumber][0].Replace("\"", "");
             currentHintCount++;
-            hintTextObjects[currentHintCount].text = hintTexts[eventNumber][currentHintCount];
+        }
+        if (currentHintCount == 1)
+        {
+            hintTextObjects[currentHintCount].text = "That translates to: " + hintTexts[eventNumber][1].Replace("\"", "");
+            currentHintCount++;
+        }
+        if (currentHintCount == 2)
+        {
+            hintTextObjects[currentHintCount].text = ("You should say: " + hintTexts[eventNumber][2] + "Which translates to: " + hintTexts[eventNumber][3]).Replace("\"", "");
+            currentHintCount++;
         }
     }
 

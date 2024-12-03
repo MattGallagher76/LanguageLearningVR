@@ -80,9 +80,9 @@ public class SpanishToEnglishCheck : MonoBehaviour
     private async void EndRecording()
     {
         Debug.Log("ended recording");
-        #if !UNITY_WEBGL
+#if !UNITY_WEBGL
         Microphone.End(null);
-        #endif
+#endif
 
         byte[] data = SaveWav.Save(fileName, clip);
 
@@ -297,11 +297,11 @@ public class SpanishToEnglishCheck : MonoBehaviour
         currentActionID = actionID;
         Debug.Log("started recording");
         isRecording = true;
-        
+
         var index = PlayerPrefs.GetInt("user-mic-device-index");
 
-        #if !UNITY_WEBGL
+#if !UNITY_WEBGL
         clip = Microphone.Start(Microphone.devices[0], false, duration, 44100);
-        #endif
+#endif
     }
 }
