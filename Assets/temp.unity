@@ -644,7 +644,7 @@ MonoBehaviour:
   acController: {fileID: 202051646}
   animationTriggers: []
   waitForStartTimer: 5
-  timer: -1.98
+  timer: 0
   waiterAnimationController: {fileID: 0}
   waiterAudioController: {fileID: 202051647}
   audioLines:

@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1860233374641314684
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8821645659957952723}
+  - component: {fileID: 496548777130830432}
+  - component: {fileID: 9135229563443962480}
+  m_Layer: 0
+  m_Name: WhisperParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8821645659957952723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860233374641314684}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496548777130830432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860233374641314684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807722730d9474a4da6749422bf5400b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasBeenDone: 0
+  debugMode: 1
+--- !u!114 &9135229563443962480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860233374641314684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa1109f2370ef59459cee49619fa6bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tmpDebug: {fileID: 0}
+  acController: {fileID: 0}
+  animationTriggers: []
+  waitForStartTimer: 5
+  timer: 0
+  waiterAnimationController: {fileID: 0}
+  waiterAudioController: {fileID: 0}
+  audioLines:
+  - {fileID: 8300000, guid: 7c0a9ae0bc020dc4d968d857523a1c4e, type: 3}
+  - {fileID: 8300000, guid: 43f6e3bf586430245a5b34a21b0af080, type: 3}
+  - {fileID: 8300000, guid: d4809fdd5eb04e54c9ebc687ec691a27, type: 3}
+  - {fileID: 8300000, guid: 3e89a0f4ad24eb04785122d00c9f6ddb, type: 3}
+  openAIStuff: {fileID: 496548777130830432}
+  hintTextsOne:
+  - "\"\xA1Bienvenidos! \xBFC\xF3mo est\xE1? Es un gusto tenerlos aqu\xED.\u201D"
+  - "\"Welcome! How are you? It's a pleasure to have you here.\u201D"
+  - "\"Gracias, estoy muy bien.\u201D"
+  - "\"Thank you, I am doing very well\u201D"
+  hintTextsTwo:
+  - "\xBFQu\xE9 quiere tomar?"
+  - "\"What would you like to drink?\u201D"
+  - "\"Quisiera un coke, por favor.\u201D"
+  - "\"I would like a coke, please.\u201D"
+  hintTextsThree:
+  - "\"\xBFQu\xE9 quiere comer?\""
+  - '"What do you want to eat?"'
+  - "\"Quisiera un burrito, por favor.\u201D"
+  - "\"I would like a burrito, please.\u201D"
+  hintTextsFour:
+  - "\"Aqu\xED est\xE1 su cheque. Que tenga un buen d\xEDa.\" "
+  - "\u201CHere\u2019s your check. Have a nice day.\u201D"
+  - "\u201CGracias, igualmente\u201D"
+  - "\u2018Thank you, same to you.\u201D"
+  hintTextsFive:
+  - 
+  - 
+  - 
+  - 
+  hintTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  drinks:
+  - {fileID: 8091294144310266039, guid: ffe5a4c2d79a49a4fa1fd947409e8127, type: 3}
+  - {fileID: 8138658651579524879, guid: 0596624026590f749866ce602539f098, type: 3}
+  - {fileID: 4816004989798690668, guid: 71e825131df3cfb4cbba2f682b2c9094, type: 3}
+  food:
+  - {fileID: 6232975487027731984, guid: 840bcbeac257acf4e8cced7631597141, type: 3}
+  - {fileID: 6390804275045314510, guid: c5f5f26e567d5b74e842a2e9cebfc48f, type: 3}
+  - {fileID: 1048251040102187782, guid: 027495039f3b66b458fe024fb0e5ca0a, type: 3}
+  drinkPosition: {x: 0.033, y: 1.4, z: 0.329}
+  foodPosition: {x: -0.195, y: 1.4, z: -0.094}
