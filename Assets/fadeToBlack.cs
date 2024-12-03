@@ -27,7 +27,7 @@ public class FadeToBlack : MonoBehaviour
         }
     }
 
-    void fade()
+    public void fade()
     {
         StartCoroutine(fadeCo());
     }

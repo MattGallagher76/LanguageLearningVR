@@ -30,7 +30,7 @@ public class SpanishToEnglishCheck : MonoBehaviour
     //Interaction 4
     //8 - “Here’s your check. Have a nice day.”
 
-    private OpenAIApi openai = new OpenAIApi("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");
+    private OpenAIApi openai = new OpenAIApi("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");
 
     private readonly string fileName = "output.wav";
     private readonly int duration = 5;
@@ -97,6 +97,7 @@ public class SpanishToEnglishCheck : MonoBehaviour
         //Interaction 1
         if (currentActionID == 2)
         {
+            Debug.Log("translation: " + res.Text);
             var newMessage = new ChatMessage()
             {
                 Role = "user",
@@ -122,18 +123,22 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
                 if (message.Content.Contains("1"))
                 {
+                    Debug.Log("sending 1");
                     tsm.response(1);
                 }
-                if (message.Content.Contains("2"))
+                else if (message.Content.Contains("2"))
                 {
+                    Debug.Log("sending 2");
                     tsm.response(2);
                 }
-                if (message.Content.Contains("3"))
+                else if (message.Content.Contains("3"))
                 {
+                    Debug.Log("sending 3");
                     tsm.response(3);
                 }
                 else
                 {
+                    Debug.Log("sending 0");
                     tsm.response(0);
                 }
             }
@@ -172,15 +177,15 @@ public class SpanishToEnglishCheck : MonoBehaviour
                 {
                     tsm.response(1);
                 }
-                if (message.Content.Contains("2"))
+                else if (message.Content.Contains("2"))
                 {
                     tsm.response(2);
                 }
-                if (message.Content.Contains("3"))
+                else if (message.Content.Contains("3"))
                 {
                     tsm.response(3);
                 }
-                if (message.Content.Contains("4"))
+                else if (message.Content.Contains("4"))
                 {
                     tsm.response(4);
                 }
@@ -224,15 +229,15 @@ public class SpanishToEnglishCheck : MonoBehaviour
                 {
                     tsm.response(1);
                 }
-                if (message.Content.Contains("2"))
+                else if (message.Content.Contains("2"))
                 {
                     tsm.response(2);
                 }
-                if (message.Content.Contains("3"))
+                else if (message.Content.Contains("3"))
                 {
                     tsm.response(3);
                 }
-                if (message.Content.Contains("4"))
+                else if (message.Content.Contains("4"))
                 {
                     tsm.response(4);
                 }
@@ -246,8 +251,8 @@ public class SpanishToEnglishCheck : MonoBehaviour
                 Debug.Log("error");
             }
         }
-        //Interaction 3
-        if (currentActionID == 6)
+        //Interaction 4
+        if (currentActionID == 8)
         {
             var newMessage = new ChatMessage()
             {
@@ -276,7 +281,7 @@ public class SpanishToEnglishCheck : MonoBehaviour
                 {
                     tsm.response(1);
                 }
-                if (message.Content.Contains("2"))
+                else if (message.Content.Contains("2"))
                 {
                     tsm.response(2);
                 }

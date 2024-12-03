@@ -13,7 +13,7 @@ public class TotalSceneManager : MonoBehaviour
 
     public float waitForStartTimer;
 
-    bool hasStarted = false;
+    //bool hasStarted = false;
 
     private int currentState = 0;
     //0 Waiting to start
@@ -59,6 +59,7 @@ public class TotalSceneManager : MonoBehaviour
     public List<List<string>> hintTexts = new List<List<string>>();
 
     public List<TMPro.TextMeshProUGUI> hintTextObjects;
+    public List<GameObject> hintBubbles;
 
     int currentHintCount = 0;
     int eventNumber = 0;
@@ -68,6 +69,8 @@ public class TotalSceneManager : MonoBehaviour
 
     public Vector3 drinkPosition;
     public Vector3 foodPosition;
+
+    public AudioSource record;
 
     void Start()
     {
@@ -83,6 +86,11 @@ public class TotalSceneManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("Tab pressed");
+            startRecording();
+        }
         if (timer >= 0)
         {
             //Debug.Log(timer);
@@ -117,6 +125,7 @@ public class TotalSceneManager : MonoBehaviour
 
     IEnumerator playAndwaitToStartRecording(AudioClip ac, int actionID)
     {
+        Debug.Log("Playing: " + actionID);
         waiterAudioController.PlayOneShot(ac);
         if (actionID == 1)
         {
@@ -195,11 +204,20 @@ public class TotalSceneManager : MonoBehaviour
     public void startRecording()
     {
         if (currentState == 2 || currentState == 4 || currentState == 6 || currentState == 8)
+        {
+            Debug.Log("Requested a recording");
+            record.Play();
             openAIStuff.StartRecording(currentState);
+        }
+        else
+        {
+            Debug.Log("Wrong state");
+        }
     }
 
     public void response(int actionID)
     {
+        Debug.Log("Response with actionID: " + actionID + " on: " + currentState);
         if (currentState == 2)
         {
             if (actionID == 1)
@@ -278,7 +296,7 @@ public class TotalSceneManager : MonoBehaviour
         {
             if (actionID == 1)
             {
-                //Fade to black
+                FindAnyObjectByType<FadeToBlack>().fade();
             }
             else if (actionID == 2)
             {
@@ -296,16 +314,19 @@ public class TotalSceneManager : MonoBehaviour
     {
         if (currentHintCount == 0)
         {
+            hintBubbles[0].SetActive(true);
             hintTextObjects[currentHintCount].text = "The waiter said: " + hintTexts[eventNumber][0].Replace("\"", "");
             currentHintCount++;
         }
-        if (currentHintCount == 1)
+        else if (currentHintCount == 1)
         {
+            hintBubbles[1].SetActive(true);
             hintTextObjects[currentHintCount].text = "That translates to: " + hintTexts[eventNumber][1].Replace("\"", "");
             currentHintCount++;
         }
-        if (currentHintCount == 2)
+        else if (currentHintCount == 2)
         {
+            hintBubbles[2].SetActive(true);
             hintTextObjects[currentHintCount].text = ("You should say: " + hintTexts[eventNumber][2] + "Which translates to: " + hintTexts[eventNumber][3]).Replace("\"", "");
             currentHintCount++;
         }
@@ -313,6 +334,9 @@ public class TotalSceneManager : MonoBehaviour
 
     public void hideAllHints()
     {
+        hintBubbles[0].SetActive(false);
+        hintBubbles[0].SetActive(false);
+        hintBubbles[0].SetActive(false);
         hintTextObjects[0].text = "";
         hintTextObjects[1].text = "";
         hintTextObjects[2].text = "";
