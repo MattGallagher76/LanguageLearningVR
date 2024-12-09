@@ -30,8 +30,8 @@ public class SpanishToEnglishCheck : MonoBehaviour
     //Interaction 4
     //8 - “Here’s your check. Have a nice day.”
 
-    private OpenAIApi openai = new OpenAIApi("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");
-
+    [Tooltip("Requires an API key")]
+    public OpenAIApi openai = new OpenAIApi("ADD API KEY HERE");
     private readonly string fileName = "output.wav";
     private readonly int duration = 5;
     private AudioClip clip;
