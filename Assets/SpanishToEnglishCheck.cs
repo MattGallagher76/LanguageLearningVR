@@ -50,6 +50,9 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
     TotalSceneManager tsm;
 
+    public bool debugCheck;
+    public bool wrongCheck;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,11 +60,12 @@ public class SpanishToEnglishCheck : MonoBehaviour
         promptList.Add("Respond with only a number as described here: 1 - If the provided text is an appropriate response to “Welcome! How are you? It's a pleasure to have you here.” but does not contain a question which can be summarized as “How are you doing?” 2 - If the provided text is an appropriate response to “Welcome! How are you? It's a pleasure to have you here. “ and contain a question which can be summarized as “How are you doing?” 3 - If the provided text is not an appropriate response to contain a question which can be summarized as “how are you doing?” Provided text:");
         promptList.Add("Respond with only a number as described here: 1 – If the provided text contains a request for a coke. 2 - If the provided text contains a request for water. 3 – If the provided text contains a request for juice. 4 – If the provided text does not contain a request for any of the above items.");
         promptList.Add("Respond with only a number as described here: 1 – If the provided text contains a request for enchiladas. 2 – If the provided text contains a request for tacos. 3 – If the provided text contains a request for burritos. 4 – If the provided text contains no request for the above items.");
-        promptList.Add("Respond with only a number as described here: 1 – If the provided text contains an appropriate response to “Have a nice day”. 2 – If the provided text does not contain an appropriate response to “Have a nice day”.");
+        promptList.Add("Respond with only a number as described here: 1 – If the provided text contains a request for the location or directions to the bathroom. 2 - If the provided text does not contain a request for the location or directions to the bathroom");
+        promptList.Add("Respond with only a number as described here: 1 – If the provided text contains an appropriate response to “Have a nice day”. 2 – If the provided text does not contain an appropriate response to “Have a nice day”. For clairt, \"thank you\" is an appropriate response and you should return a 1 if that is the provided text.");
     }
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
         if (isRecording)
         {
@@ -79,6 +83,27 @@ public class SpanishToEnglishCheck : MonoBehaviour
 
     private async void EndRecording()
     {
+        if(debugCheck)
+        {
+            Debug.Log("Deubg end recording");
+            tsm.response(1);
+            return;
+        }
+        if(wrongCheck)
+        {
+            Debug.Log("Wrong Check - " + currentActionID);
+            if (currentActionID == 2)
+                tsm.response(3);
+            if (currentActionID == 4)
+                tsm.response(4);
+            if (currentActionID == 6)
+                tsm.response(4);
+            if (currentActionID == 8)
+                tsm.response(2);
+            if (currentActionID == 10)
+                tsm.response(2);
+            return;
+        }
         Debug.Log("ended recording");
 #if !UNITY_WEBGL
         Microphone.End(null);
@@ -260,6 +285,54 @@ public class SpanishToEnglishCheck : MonoBehaviour
                 Content = promptList[3] + "\n" + res.Text
             };
 
+            Debug.Log("Final text: " + res.Text);
+
+            List<ChatMessage> messages = new List<ChatMessage>();
+            messages.Add(newMessage);
+
+            var completionResponse = await openai.CreateChatCompletion(new CreateChatCompletionRequest()
+            {
+                Model = "gpt-4o-mini",
+                Messages = messages
+            });
+
+            if (completionResponse.Choices != null && completionResponse.Choices.Count > 0)
+            {
+                var message = completionResponse.Choices[0].Message;
+                message.Content = message.Content.Trim();
+
+                Debug.Log("Message: " + message.Content);
+                Debug.Log("Done");
+
+                if (message.Content.Contains("1"))
+                {
+                    tsm.response(1);
+                }
+                else if (message.Content.Contains("2"))
+                {
+                    tsm.response(2);
+                }
+                else
+                {
+                    tsm.response(0);
+                }
+            }
+            else
+            {
+                Debug.Log("error");
+            }
+        }
+        //Interaction 5
+        if (currentActionID == 10)
+        {
+            var newMessage = new ChatMessage()
+            {
+                Role = "user",
+                Content = promptList[4] + "\n" + res.Text
+            };
+
+            Debug.Log("Final text: " + res.Text);
+
             List<ChatMessage> messages = new List<ChatMessage>();
             messages.Add(newMessage);
 
@@ -297,16 +370,22 @@ public class SpanishToEnglishCheck : MonoBehaviour
         }
     }
 
-    public void StartRecording(int actionID)
+    public bool StartRecording(int actionID)
     {
-        currentActionID = actionID;
-        Debug.Log("started recording");
-        isRecording = true;
+        if(isRecording == false)
+        {
+            currentActionID = actionID;
+            Debug.Log("started recording");
+            isRecording = true;
 
-        var index = PlayerPrefs.GetInt("user-mic-device-index");
+            var index = PlayerPrefs.GetInt("user-mic-device-index");
 
-#if !UNITY_WEBGL
-        clip = Microphone.Start(Microphone.devices[0], false, duration, 44100);
+            #if !UNITY_WEBGL
+            clip = Microphone.Start(Microphone.devices[0], false, duration, 44100);
 #endif
+            return true;
+        }
+        Debug.Log("start recording returned false");
+        return false;
     }
 }

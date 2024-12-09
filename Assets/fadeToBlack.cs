@@ -12,35 +12,28 @@ public class FadeToBlack : MonoBehaviour
     public float timeToChange;
     public Image img;
 
+
     // Start is called before the first frame update
     void Start()
     {
         img.color = startColor;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void fade(AudioSource ac)
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            fade();
-        }
+        StartCoroutine(fadeCo(ac));
     }
 
-    public void fade()
+    IEnumerator fadeCo(AudioSource ac)
     {
-        StartCoroutine(fadeCo());
-    }
-
-    IEnumerator fadeCo()
-    {
+        float maxVolume = ac.volume;
         for (float t = 0; t <= timeToChange; t += Time.deltaTime)
         {
+            ac.volume = Mathf.Lerp(maxVolume, 0, t / timeToChange);
             img.color = Color.Lerp(startColor, endColor, t / timeToChange);
             yield return 0;
         }
         img.color = endColor;
         yield return new WaitForSeconds(0.25f);
-        SceneManager.LoadScene(0);
     }
 }
